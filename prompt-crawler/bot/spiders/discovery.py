@@ -11,7 +11,7 @@ class DiscoverySpider(scrapy.Spider):
     def __init__(self, prompt=None, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Priority: Command line arg -> Env Var -> Fallback
-        self.prompt = prompt or os.getenv('CRAWL_PROMPT') or "claude capybara leak"
+        self.prompt = prompt or os.getenv('CRAWL_PROMPT') or "latest code breakthroughs"
         self.api_url = os.getenv('DUX_API_URL', 'http://dux-node:4479')
 
     def start_requests(self):
