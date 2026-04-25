@@ -1,0 +1,26 @@
+services:
+  # The Search Node 
+  dux-node:
+    build: .
+    # Starts the API server
+    command: ddgs api --host 0.0.0.0 --port 4479 
+    ports:
+      - "4479:4479"
+    volumes:
+      - dux_cache:/root/.cache/ddgs
+
+  # The Scraper
+  scrapy-worker:
+      build: .
+      depends_on:
+        - dux-node
+      environment:
+        - DUX_API_URL=http://dux-node:4479
+      volumes:
+        - .:/app             # Map everything to /app
+        - ./output:/app/output # Ensure output still maps correctly
+      working_dir: /app      # Make sure it knows where to run from
+      command: ["tail", "-f", "/dev/null"]
+
+volumes:
+  dux_cache:

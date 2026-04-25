@@ -1,0 +1,4 @@
+scrapy>=2.15.0
+ddgs[api, dht]
+httpx
+itemloaders
